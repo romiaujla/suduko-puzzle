@@ -36,10 +36,12 @@ export default function Home() {
 
   const boardChanged = (value: string, row: number, col: number) => {
     const numberValue = parseInt(value, 10);
+    const updatedBoard = boardValue;
+    updatedBoard[row][col] = numberValue;
     if (solution[row][col] === numberValue) {
-      // Do nothing
+      setBoardValue(updatedBoard);
     } else {
-      // color the text for the input red
+      setBoardValue(updatedBoard);
     }
   }
 
@@ -54,21 +56,19 @@ export default function Home() {
         {
           boardValue.map((row, rowIndex) => {
             return row.map((cell, colIndex) => {
-              console.log('cel;', cell);
               return (
                 <input
                   key={`${rowIndex}-${colIndex}`}
                   type="text"
                   onChange={(e) => boardChanged(e.target.value, rowIndex, colIndex)}
                   value={cell.toString()}
-                  className="text-center border"
+                  className="text-center border py-2 px-2 text-lg"
                   maxLength={1}
                 />
               )
             })
           })
         }
-
       </div>
 
 
