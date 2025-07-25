@@ -1,13 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bitcount_Grid_Double } from "next/font/google";
 import { useEffect, useState } from "react";
 
-const geistSans = Geist({
+const bitCount = Bitcount_Grid_Double({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -56,16 +51,37 @@ export default function Home() {
         {
           boardValue.map((row, rowIndex) => {
             return row.map((cell, colIndex) => {
-              return (
-                <input
+              let border = 'border-1 border-[gray] ';
+
+              if (rowIndex > 0 && rowIndex % 3 === 0) {
+                border += 'border-t-2 border-t-white '
+              }
+
+              if (colIndex > 0 && colIndex % 3 == 0) {
+                border += 'border-l-2 border-l-white '
+              }
+
+              if (cell > 0) {
+                return (<input
                   key={`${rowIndex}-${colIndex}`}
                   type="text"
+                  disabled={true}
                   onChange={(e) => boardChanged(e.target.value, rowIndex, colIndex)}
                   value={cell.toString()}
-                  className="text-center border py-2 px-2 text-lg"
+                  className={`text-center ${border} py-2 px-2 text-lg bg-foreground/30`}
                   maxLength={1}
-                />
-              )
+                />)
+              } else {
+                return (
+                  <input
+                    key={`${rowIndex}-${colIndex}`}
+                    type="text"
+                    onChange={(e) => boardChanged(e.target.value, rowIndex, colIndex)}
+                    value=''
+                    className={`text-center ${border} py-2 px-2 text-lg`}
+                    maxLength={1}
+                  />)
+              }
             })
           })
         }
